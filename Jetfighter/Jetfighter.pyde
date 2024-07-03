@@ -40,9 +40,18 @@ class Blok():     #klasa przeszkody (chmurki, bloczki i takie tam); randomizowan
 
 # plansza
 def setup():
-    pass 
+    size(900, 900)
+    textSize(100)
+
 def draw():
-    pass
+    text('JET FIGHTER', width/2-280, height/2)                    #wyświetlanie nazwy gry na początku
+    textSize(20)
+    text('press ENTER to continue', width/2-120, height/2+100)
+    textSize(100)
+    if key == '\n':                                               #po kliknięciu enter przechodzimy dalej/zaczynamy grę (tło się zamalowuje)
+        background(150)
+        
+    
     
 
         
