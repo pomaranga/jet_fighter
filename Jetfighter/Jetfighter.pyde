@@ -7,17 +7,34 @@ import random
 import time
 
 class Plane():
-    def __init__(self):
-        pass
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.speed = 10  #tu musimy sprawdzić czy ta szybkość wystarczy
         
-    def move():     #lewa/prawa: obrót o np. 10 st.// przytrzymanie klawisza - "płynny obrót" 
-        pass
+    def move(self):
+        if self.direction == 0:  #do góry
+            self.y -= self.speed
+        elif self.direction == 1:   #w prawo
+            self.x += self.speed
+        elif self.direction == 2:   #w dół
+            self.y += self.speed
+        elif self.dierction == 3:  #w lewo
+            self.x -= self.speed
     
+def keyPressed():
+    if keyCode == UP:
+        Plane.direction = 0
+    elif keyCode == RIGHT:
+        Plane.direction = 1
+    elif keyCode = DOWN:
+        Plane.direction = 2
+    elif keyCode = LEFT:
+        Plane.direction = 3
     def shoot():
         pass
     
-    def speed():    #czy potrzebne tutaj?
-        pass
+
     
 class Bullet():
     def __init__(self):
