@@ -21,18 +21,32 @@ class Plane():
             self.y += self.speed
         elif self.dierction == 3:  #w lewo
             self.x -= self.speed
-    
-def keyPressed():
-    if keyCode == UP:
-        Plane.direction = 0
-    elif keyCode == RIGHT:
-        Plane.direction = 1
-    elif keyCode = DOWN:
-        Plane.direction = 2
-    elif keyCode = LEFT:
-        Plane.direction = 3
+            
     def shoot():
         pass
+
+class Pierwszy(Plane):        #strzałki
+    def keyPressed():
+        if keyCode == UP:
+            Plane.direction = 0
+        elif keyCode == RIGHT:
+            Plane.direction = 1
+        elif keyCode == DOWN:
+            Plane.direction = 2
+        elif keyCode == LEFT:
+            Plane.direction = 3
+
+class Drugi(Plane):       #litery
+    def keyPressed():
+        if keyCode == 'w':
+            Plane.direction = 0
+        elif keyCode == 'd':
+            Plane.direction = 1
+        elif keyCode == 's':
+            Plane.direction = 2
+        elif keyCode == 'd':
+            Plane.direction = 3
+    
     
 
     
