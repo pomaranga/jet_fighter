@@ -6,69 +6,73 @@
 import random
 import time
 
+bullets = []
+planes = []
+iteracja = 0
+
 class Plane():
-    def __init__(self, x, y):
+    def init(self, x, y):
+        
         self.x = x
         self.y = y
-        self.speed = 10  #tu musimy sprawdzić czy ta szybkość wystarczy
+        self.speed = 2  #tu musimy sprawdzić czy ta szybkość wystarczy
+        self.angle = 0  #samolot bedzie sie obracal, a nie zmienial kierunek
         
     def move(self):
-        if self.direction == 0:  #do góry
-            self.y -= self.speed
-        elif self.direction == 1:   #w prawo
-            self.x += self.speed
-        elif self.direction == 2:   #w dół
-            self.y += self.speed
-        elif self.dierction == 3:  #w lewo
-            self.x -= self.speed
+        self.x += self.speed * cos(radians(self.angle))
+        self.y += self.speed * sin(radians(self.angle))
+        if self.x < 0:
+            self.x = width
+        elif self.x > width:
+            self.x = 0
+        if self.y < 0:
+            self.y = height
+        elif self.y > height:
+            self.y = 0
+            
+    def turn_left(self):
+        self.angle -= 15
+
+    def turn_right(self):
+        self.angle += 15
             
     def shoot(self, is_player_one):
-        global bullets
-        bullet_x = self.x + 10 if is_player_one else self.x - 10
-        bullet_y = self.y
-        bullets.append(Bullet(bullet_x, bullet_y, is_player_one))
+        bullet_x = self.x + 40 * cos(radians(self.angle))
+        bullet_y = self.y + 40 * sin(radians(self.angle))
+        bullets.append(Bullet(bullet_x, bullet_y, self.angle, is_player_one))
+        
+    def display(self):
+        fill(49, 120, 115) if self == planes[0] else fill(202, 224, 13)
+        noStroke()
+        with pushMatrix():
+            translate(self.x, self.y)
+            rotate(radians(self.angle))
+            triangle(-50, 40, 50, 0, -50, -40)
+            
 
-class Pierwszy(Plane):        #strzałki
-    def keyPressed():
-        if keyCode == UP:
-            Plane.direction = 0
-        elif keyCode == RIGHT:
-            Plane.direction = 1
-        elif keyCode == DOWN:
-            Plane.direction = 2
-        elif keyCode == LEFT:
-            Plane.direction = 3
-        elif keyCode == SHIFT:  # strzał dla pierwszegod gracza
-            self.shoot(False)
-
-class Drugi(Plane):       #litery
-    def keyPressed():
-        if keyCode == 'w':
-            Plane.direction = 0
-        elif keyCode == 'd':
-            Plane.direction = 1
-        elif keyCode == 's':
-            Plane.direction = 2
-        elif keyCode == 'd':
-            Plane.direction = 3
-        elif key == ' ':  # strzał dla drugiego gracza
-            self.shoot(True)
     
     
 
     
 class Bullet():
-    def __init__(self, x, y, is_player_one):
+    def init(self, x, y, angle, is_player_one):
         self.x = x
         self.y = y
         self.speed = 10
-        self.is_player_one = is_player_one):
+        self.angle = angle
+        self.is_player_one = is_player_one
     
     def move(self):
-        if self.is_player_one:
-            self.x += self.speed
-        else:
-            self.x -= self.speed): 
+        self.x += self.speed * cos(radians(self.angle))
+        self.y += self.speed * sin(radians(self.angle))
+        
+    def display(self):
+        fill(245, 195, 194)
+        noStroke()
+        circle(self.x, self.y, 11)
+
+    def is_off_screen(self):
+        return self.x < 0 or self.x > width or self.y < 0 or self.y > height
         
     def hit():   #zzderzenie z samolotem - puntk; z przeskzodą - zero pkt
         pass
@@ -76,7 +80,7 @@ class Bullet():
 class Chmury():     #klasa przeszkody (chmurka)
     global iteracja
     
-    def __init__(self):
+    def init(self):
         self.d = random.randint(20, 100)                          #średnica lewego kółka chmury
         self.x = random.randint(0+3*self.d, 900)                  #wpółrzędna x lewego kółka chmury
         self.y = random.randint(0+self.d, 900-self.d)             #wpółrzędna y lewego kółka chmury
@@ -92,32 +96,62 @@ class Chmury():     #klasa przeszkody (chmurka)
       
 
 def setup():
-    size(900, 900)
+    size(1280, 897)
     textSize(100)
-    fill(150)
-    global start, chmura, chmura2, chmura3, chmura4, iteracja
+    global start, chmura, chmura2, chmura3, chmura4, iteracja, planes
     start = None
     iteracja = 0
     chmura = Chmury()
     chmura2 = Chmury()
     chmura3 = Chmury()
     chmura4 = Chmury()
+    planes.append(Plane(width // 4, height - 50))
+    planes.append(Plane(3 * width // 4, 50))
 
 def draw():
-    global start, iteracja
+    global start, iteracja, img, planes
     if start == None:
-        text('JET FIGHTER', width/2-280, height/2)                    #wyświetlanie nazwy gry na początku
+        background(150)
+        img = loadImage("sky.jpg")
+        background(img)
+        text('JET FIGHTER', width / 2 - 280, height / 2)
         textSize(20)
-        text('press ENTER to continue', width/2-120, height/2+100)
+        text('press g to continue', width / 2 - 120, height / 2 + 100)
         textSize(100)
-    if key == '\n':                                                   #po kliknięciu enter przechodzimy dalej/zaczynamy grę (tło się zamalowuje)
-        start = True                                                  #bez tej zmiennej (start) po naciśnięciu innego klawisza niż enter pojawiają się te wcześniejsze napisy
-        background(150)                                               #wszystko, co ma się wyświetlić/zrobić dopiero po naciśnięciu enter musi być w tym bloku 'if'
+    elif start == True:
+        background(img)
         chmura.drawing()
         chmura2.drawing()
         chmura3.drawing()
         chmura4.drawing()
-    iteracja += 1
-    
 
-        
+        for plane in planes:
+            plane.move()
+            plane.display()
+
+        for bullet in bullets[:]:
+            bullet.move()
+            bullet.display()
+            if bullet.is_off_screen():
+                bullets.remove(bullet)
+
+    iteracja += 1
+
+def keyPressed():
+    if key == 'g':
+        global start
+        start = True
+
+    if keyCode == RIGHT:
+        planes[0].turn_right()
+    elif keyCode == LEFT:
+        planes[0].turn_left()
+    elif key == '\n':
+        planes[0].shoot(True)
+
+    if key == 'd':
+        planes[1].turn_right()
+    elif key == 'a':
+        planes[1].turn_left()
+    elif key == ' ':
+        planes[1].shoot(True)
