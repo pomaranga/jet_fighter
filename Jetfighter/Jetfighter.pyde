@@ -11,7 +11,7 @@ planes = []
 iteracja = 0
 
 class Plane():
-    def init(self, x, y):
+    def __init__(self, x, y):
         
         self.x = x
         self.y = y
@@ -55,7 +55,7 @@ class Plane():
 
     
 class Bullet():
-    def init(self, x, y, angle, is_player_one):
+    def __init__(self, x, y, angle, is_player_one):
         self.x = x
         self.y = y
         self.speed = 10
@@ -80,7 +80,7 @@ class Bullet():
 class Chmury():     #klasa przeszkody (chmurka)
     global iteracja
     
-    def init(self):
+    def __init__(self):
         self.d = random.randint(20, 100)                          #średnica lewego kółka chmury
         self.x = random.randint(0+3*self.d, 900)                  #wpółrzędna x lewego kółka chmury
         self.y = random.randint(0+self.d, 900-self.d)             #wpółrzędna y lewego kółka chmury
