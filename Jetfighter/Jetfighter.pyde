@@ -22,8 +22,11 @@ class Plane():
         elif self.dierction == 3:  #w lewo
             self.x -= self.speed
             
-    def shoot():
-        pass
+    def shoot(self, is_player_one):
+        global bullets
+        bullet_x = self.x + 10 if is_player_one else self.x - 10
+        bullet_y = self.y
+        bullets.append(Bullet(bullet_x, bullet_y, is_player_one))
 
 class Pierwszy(Plane):        #strzałki
     def keyPressed():
@@ -35,6 +38,8 @@ class Pierwszy(Plane):        #strzałki
             Plane.direction = 2
         elif keyCode == LEFT:
             Plane.direction = 3
+        elif keyCode == SHIFT:  # strzał dla pierwszegod gracza
+            self.shoot(False)
 
 class Drugi(Plane):       #litery
     def keyPressed():
@@ -46,19 +51,24 @@ class Drugi(Plane):       #litery
             Plane.direction = 2
         elif keyCode == 'd':
             Plane.direction = 3
+        elif key == ' ':  # strzał dla drugiego gracza
+            self.shoot(True)
     
     
 
     
 class Bullet():
-    def __init__(self):
-        pass
+    def __init__(self, x, y, is_player_one):
+        self.x = x
+        self.y = y
+        self.speed = 10
+        self.is_player_one = is_player_one):
     
-    def move():    
-        pass
-        
-    def speed():
-        pass
+    def move(self):
+        if self.is_player_one:
+            self.x += self.speed
+        else:
+            self.x -= self.speed): 
         
     def hit():   #zzderzenie z samolotem - puntk; z przeskzodą - zero pkt
         pass
