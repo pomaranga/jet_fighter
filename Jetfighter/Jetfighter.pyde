@@ -85,17 +85,17 @@ class Chmury():     #klasa przeszkody (chmurka)
         #rysuje jedną chmurkę (złożoną z 3 kółek i prostokąta) o losowym rozmiarze i lokalizacji, która przesuwa się w prawo z każdą iteracją programu
         fill(250)
         noStroke()
-        circle(-self.x + self.d + iteracja % (900+self.x), self.y, self.d)                                 #lewe małe kółko
-        circle(-self.x + 2*self.d + iteracja % (900+self.x), self.y, self.d)                               #prawe małe kółko
-        circle(-self.x + 1.5*self.d + iteracja % (900+self.x), self.y - 0.5*self.d, 1.2*self.d)            #duże kółko
-        rect(-self.x + self.d + iteracja % (900+self.x), self.y, self.d, 0.5*self.d)                       #prostokąt
+        circle(-self.x + self.d + iteracja % (width+self.x), self.y, self.d)                                 #lewe małe kółko
+        circle(-self.x + 2*self.d + iteracja % (width+self.x), self.y, self.d)                               #prawe małe kółko
+        circle(-self.x + 1.5*self.d + iteracja % (width+self.x), self.y - 0.5*self.d, 1.2*self.d)            #duże kółko
+        rect(-self.x + self.d + iteracja % (width+self.x), self.y, self.d, 0.5*self.d)                       #prostokąt
       
 
 def setup():
     size(900, 900)
     textSize(100)
     fill(150)
-    global start, chmura, chmura2, chmura3, chmura4, x, y, d, iteracja
+    global start, chmura, chmura2, chmura3, chmura4, iteracja
     start = None
     iteracja = 0
     chmura = Chmury()
