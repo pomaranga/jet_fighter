@@ -56,7 +56,7 @@ class Plane():
             rotate(radians(self.angle))
             triangle(-50, 40, 50, 0, -50, -40)
     
-    def check_collision(self, bullet):
+    def check_collision(self, bullet):                            # Sprawdzenie, czy samolot został trafiony
         distance = dist(self.x, self.y, bullet.x, bullet.y)
         return distance < 40 
 
@@ -110,7 +110,7 @@ def setup():
     chmura4 = Chmury()
     planes.append(Plane(width // 4, height - 50))
     planes.append(Plane(3 * width // 4, 50))
-    game_state = "START"
+    game_state = "START"                                           # Stan rozpoczęcia gry
 
 def draw():
     global start, iteracja, img, planes, player1_score, player2_score, game_state, player1_name, player2_name, max_hits, start_time, current_time
@@ -118,7 +118,7 @@ def draw():
     img = loadImage("sky.jpg")
     background(img)
     
-    if game_state == "START":
+    if game_state == "START":                                      # Wyświetlenie tytułu gry i prośba o podanie imienia gracza 1
         textSize(100)
         text('JET FIGHTER', width / 2, height / 3)
         textSize(30)
@@ -126,7 +126,7 @@ def draw():
         text(player1_name, width / 2, height / 2 + 50)
         text("Press ENTER to confirm", width / 2, height / 2 + 100)
     
-    elif game_state == "INPUT_NAME2":
+    elif game_state == "INPUT_NAME2":                              # Prośba o podanie imienia gracza 2
         textSize(100)
         text('JET FIGHTER', width / 2, height / 3)
         textSize(30)
@@ -134,7 +134,7 @@ def draw():
         text(player2_name, width / 2, height / 2 + 50)
         text("Press ENTER to confirm", width / 2, height / 2 + 100)
     
-    elif game_state == "INPUT_HITS":
+    elif game_state == "INPUT_HITS":                               # Prośba o podanie liczby trafień potrzebnych do wygranej
         textSize(100)
         text('JET FIGHTER', width / 2, height / 3)
         textSize(30)
@@ -142,11 +142,11 @@ def draw():
         text(str(max_hits), width / 2, height / 2 + 50)
         text("Press ENTER to start the game", width / 2, height / 2 + 100)
     
-    elif game_state == "PLAY":
+    elif game_state == "PLAY":                                     # Główna pętla gry
         if start_time == 0:
             start_time = millis()
         
-        current_time = (millis() - start_time) / 1000 
+        current_time = (millis() - start_time) / 1000              # Zapisanie czasu rozpoczęcia gry
 
         chmura.drawing()
         chmura2.drawing()
@@ -161,7 +161,7 @@ def draw():
             bullet.move()
             bullet.display()
             
-            for i, plane in enumerate(planes):
+            for i, plane in enumerate(planes):                     # Sprawdzenie kolizji kul z samolotami
                 if plane.check_collision(bullet):
                     if bullet.is_player_one != (i == 0):
                         if bullet.is_player_one:
@@ -170,13 +170,13 @@ def draw():
                             player2_score += 1
                         bullets.remove(bullet)
                         if player1_score >= max_hits or player2_score >= max_hits:
-                            game_state = "END"
+                            game_state = "END"                     # Zakończenie gry, jeśli któryś gracz osiągnie maksymalną liczbę trafień
                         break
             
             if bullet.is_off_screen():
                 bullets.remove(bullet)
 
-        fill(255)
+        fill(255)                                                  # Wyświetlenie wyników i czasu
         textSize(24)
         textAlign(LEFT, TOP)
         text(player2_name + ": " + str(player2_score), 10, 10)
@@ -189,7 +189,7 @@ def draw():
         textAlign(CENTER, TOP)
         text("Hits to win: " + str(max_hits), width / 2, 40)
 
-    elif game_state == "END":
+    elif game_state == "END":                                      # Wyświetlenie ekranu końca gry
         textSize(50)
         if player1_score >= max_hits:
             text(player1_name + " wins!", width / 2, height / 2 - 50)
