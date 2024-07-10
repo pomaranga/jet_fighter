@@ -1,4 +1,4 @@
-#Jet Fighter
+      #Jet Fighter
 #na początku gry: komunikat --> wybór rodzaju gracza (pierogi, szynka etc.); wybór ilości strzałów; 
 #zliczanie punktów
 #setup/plansza
@@ -124,6 +124,7 @@ def draw():
         text("Enter Player 1 name:", width / 2, height / 2)
         text(player1_name, width / 2, height / 2 + 50)
         text("Press ENTER to confirm", width / 2, height / 2 + 100)
+        text("STRZALKI. SHOOT: ENTER", width / 2, height / 2 + 200)
     
     elif game_state == "INPUT_NAME2":                              # Prośba o podanie imienia gracza 2
         textSize(100)
@@ -132,6 +133,7 @@ def draw():
         text("Enter Player 2 name:", width / 2, height / 2)
         text(player2_name, width / 2, height / 2 + 50)
         text("Press ENTER to confirm", width / 2, height / 2 + 100)
+        text("A I D. SHOOT: SPACE", width / 2, height / 2 + 200)
     
     elif game_state == "INPUT_HITS":                               # Prośba o podanie liczby trafień potrzebnych do wygranej
         textSize(100)
