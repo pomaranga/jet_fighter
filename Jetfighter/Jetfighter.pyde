@@ -101,8 +101,7 @@ def setup():
     size(1280, 897)
     textSize(100)
     textAlign(CENTER, CENTER)
-    global start, chmura, chmura2, chmura3, chmura4, iteracja, planes, game_state
-    start = None
+    global chmura, chmura2, chmura3, chmura4, iteracja, planes, game_state
     iteracja = 0
     chmura = Chmury()
     chmura2 = Chmury()
